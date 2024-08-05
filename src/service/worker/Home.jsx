@@ -358,6 +358,66 @@ console.log("this is pendingaccordingtocategory",pendingaccordingtocategory)
           <div className='col-xxl-6 col-xl-6 col-lg-6  col-md-5 worker-problem-description-section'>
               <div className='worker-problem-description'>
               <h4>Full Name:{JSON.parse(item.bookedProblem).categoryName}</h4>
+              <h4 className=''>Order Date:{item.bookedDate}Time:{item.bookedDate}</h4>
+              </div>
+          </div>
+
+          <div data-bs-toggle="modal" data-bs-target="#ongoingmode"className='col-md-3  worker-problem-status-section d-flex justify-content-end  align-items-center'>
+              <div className={`worker-problem-status col-6 ${item.status==='ongoing'?'col-md-10 h-50  text-center pending d-flex  justify-content-center  align-items-center rounded':""}`}>
+  {item.status}
+              </div>
+          </div>
+  
+          <div className="modal fade" id="ongoingmode" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div className="modal-dialog">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div className="modal-body">
+        <label className='assistance-level'>Update status:</label>
+                        <select className="form-select" onChange={levelofstatus} aria-label="Default select example">
+                          <option selected>Select Assist Level</option>
+                          <option className="op" value="ongoing">ongoing</option>
+                          <option className="op" value="pending">pending</option>
+                          <option className="op" value="appoint">appoint</option>
+                          <option className="op" value="completed">completed</option>
+                        </select>
+  
+        </div>
+        <div className="modal-footer">
+          <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button"onClick={()=>save(item)} className="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+      </div>
+      </div>
+  
+  
+          <div onClick={()=>show(item)} className=" col-xxl-1 col-xl-1 col-lg-1 col-md-2  d-flex align-items-center justify-content-end pr-1 worker-show-status-section">
+      <div className="col-md-12 col-sm-2 col-3 d-flex h-50 align-items-center justify-content-center  worker-show-status  rounded "> 
+          <VisibilityIcon/>
+    </div>
+  </div>
+          </div>
+              
+          
+  
+         </div>
+         </div>
+         </div>
+                  
+              {/* <div key={index} className='row'>
+               <div className='col-md-12'>
+              <div className='onworkpage '>
+              <div className='row'>
+          <div className=' col-md-2  worker-problem-image-section'>
+              <img  className=" worker-problem-image img-fluid"src={JSON.parse(item.bookedProblem).imagePath}alt='problemimage'/>
+          </div>
+          <div className='col-xxl-6 col-xl-6 col-lg-6  col-md-5 worker-problem-description-section'>
+              <div className='worker-problem-description'>
+              <h4>Full Name:{JSON.parse(item.bookedProblem).categoryName}</h4>
               <h4>Order Date:{item.bookedDate}Time:{item.bookedDate}</h4>
               </div>
           </div>
@@ -406,7 +466,7 @@ console.log("this is pendingaccordingtocategory",pendingaccordingtocategory)
   
          </div>
          </div>
-         </div>
+         </div> */}
       
               </>
      
@@ -472,59 +532,6 @@ console.log("this is pendingaccordingtocategory",pendingaccordingtocategory)
     </div>
   </div>
           </div>
-          
-          {/* <div className='row'>
-          <div className=' col-xl-1 col-lg-2 col-md-2 col-sm-2 worker-problem-image-section'>
-              <img  className=" worker-problem-image img-fluid"src={JSON.parse(item.bookedProblem).imagePath}alt='problemimage'/>
-          </div>
-          <div className='col-md-4 col-lg-4 worker-problem-description-section'>
-              <div className='worker-problem-description'>
-              <h4>Full Name:{JSON.parse(item.bookedProblem).categoryName}</h4>
-              <h4>Order Date:{item.bookedDate}Time:{item.bookedDate}</h4>
-              </div>
-          </div>
-
-          <div data-bs-toggle="modal" data-bs-target="#completedModel"className='col-md-3 worker-problem-status-section d-flex justify-content-end  align-items-center'>
-              <div className={`worker-problem-status col-6 ${item.status==='ongoing'?'col-md-5 col-sm-6 h-50  text-center ongoing d-flex  justify-content-center  align-items-center rounded':item.status==='pending'?'col-md-5 col-sm-6 h-50  text-center pending d-flex  justify-content-center  align-items-center rounded':item.status==='onwork'?'onwork':item.status==='completed'?'completed':''}`}>
-  {item.status}
-              </div>
-          </div>
-         
-  
-          <div className="modal fade" id="completedModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div className="modal-dialog">
-      <div className="modal-content">
-        <div className="modal-header">
-          <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div className="modal-body">
-        <label className='assistance-level'>Update status:</label>
-                        <select className="form-select" onChange={levelofstatus} aria-label="Default select example">
-                          <option selected>Select Assist Level</option>
-                          <option className="op" value="ongoing">ongoing</option>
-                          <option className="op" value="pending">pending</option>
-                          <option className="op" value="appoint">appoint</option>
-                          <option className="op" value="completed">completed</option>
-                        </select>
-  
-        </div>
-        <div className="modal-footer">
-          <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button"onClick={()=>save(item)} className="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-      </div>
-      </div>
-  
-  
-          <div onClick={()=>show(item)} className="col-md-1 d-flex align-items-center justify-content-end pr-1 worker-show-status-section">
-      <div className="col-2 col-sm-1 col-md-12 col-xxl-6 col-xl-10 col-lg-12 d-flex h-50 align-items-center justify-content-center  worker-show-status  rounded "> 
-          <VisibilityIcon/>
-    </div>
-  </div>
-          </div> */}
-  
          </div>
          </div>
          </div>
