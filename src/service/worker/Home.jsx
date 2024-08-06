@@ -7,7 +7,6 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useNavigate,useLocation,useParams} from 'react-router-dom';
 // import Onwork from './Onwork';
 import PropTypes from 'prop-types';
-
 const Home = ({Isworker,IsUser,setIsUser}) => {
   const{category}=useParams();
   const navigate=useNavigate();
@@ -16,7 +15,7 @@ const Home = ({Isworker,IsUser,setIsUser}) => {
   useEffect(()=>{
     setIsUser(false);
 },[setIsUser])
-    const[pending,setpending]=useState()
+    const[pending,setpending]=useState([])
     useEffect(()=>{
       const fetchdata=async()=>{
           try {
@@ -38,7 +37,7 @@ const Home = ({Isworker,IsUser,setIsUser}) => {
       }
       fetchdata()
   },[])
-  const[completed,setcompleted]=useState();
+  const[completed,setcompleted]=useState([]);
   useEffect(()=>{
     const fetchdata=async()=>{
         try {
@@ -61,7 +60,7 @@ const Home = ({Isworker,IsUser,setIsUser}) => {
     fetchdata()
 },[])
 
-  const[onwork,setonwork]=useState();
+  const[onwork,setonwork]=useState([]);
   useEffect(()=>{
     const fetchdata=async()=>{
         try {
@@ -83,7 +82,7 @@ const Home = ({Isworker,IsUser,setIsUser}) => {
     }
     fetchdata()
 },[])
-const[appoint,setappoint]=useState();
+const[appoint,setappoint]=useState([]);
 useEffect(()=>{
   const fetchdata=async()=>{
       try {
@@ -164,34 +163,61 @@ const show=(item)=>{
   navigate('/show',{state:item})
 }
 
-console.log("this is pending",pending)
-const pendingaccordingtocategory=pending===undefined?"":pending.filter((item)=>{return JSON.parse(item.bookedProblem).categoryName===category})
-const onworkaccordingtocategory=onwork===undefined?"":onwork.filter((item)=>{return JSON.parse(item.bookedProblem).categoryName===category})
-const completedaccordingtocategory=completed===undefined?"":completed.filter((item)=>{return JSON.parse(item.bookedProblem).categoryName===category})
-const appointaccordingtocategory=appoint===undefined?"":appoint.filter((item)=>{return JSON.parse(item.bookedProblem).categoryName===category})
+// console.log("this is pending",pending===undefined?"":pending.fetchbooking[0].
+//   bookedProblem.categoryName
 
-console.log("this is pendingaccordingtocategory",pendingaccordingtocategory)
-// const[hell,sethell]=useState()
-// useEffect(()=>{
-//   sethell(pendingaccordingtocategory)
-// },[])
-// const map=pending===undefined?"":pendingaccordingtocategory.map((item,index)=>{return item.id})
-// console.log("this is map",map)
+// )
+console.log("this is pending",pending===undefined?"":pending
+
+)
+// const pendingaccordingtocategory=pending===undefined?"":pending.filter((item)=>{return JSON.parse(item.bookedProblem).categoryName===category})
+// const onworkaccordingtocategory=onwork===undefined?"":onwork.filter((item)=>{return JSON.parse(item.bookedProblem).categoryName===category})
+// const completedaccordingtocategory=completed===undefined?"":completed.filter((item)=>{return JSON.parse(item.bookedProblem).categoryName===category})
+// const appointaccordingtocategory=appoint===undefined?"":appoint.filter((item)=>{return item.bookedProblem.categoryName===category})
+
+const [pendingaccordingtocategory,setpendingaccordingtocategory] = useState([]);
+const [onworkaccordingtocategory,setonworkaccordingtocategory] = useState([]);
+const [completedaccordingtocategory,setcompletedaccordingtocategory] = useState([]);
+const [appointaccordingtocategory,setappointaccordingtocategory] = useState([]);
+
+useEffect(() => {
+  try {
+    const pendingaccordingtocategory = pending.fetchbooking.filter((item) => item.bookedProblem.categoryName===category);
+    setpendingaccordingtocategory(pendingaccordingtocategory);
+    const onworkaccordingtocategory=onwork.fetchbooking.filter((item)=>item.bookedProblem.categoryName===category)
+    setonworkaccordingtocategory(onworkaccordingtocategory)
+    const completedaccordingtocategory = completed.fetchbooking.filter((item) => item.bookedProblem.categoryName===category);
+    setcompletedaccordingtocategory(completedaccordingtocategory);
+    const appointaccordingtocategory=onwork.fetchbooking.filter((item)=>item.bookedProblem.categoryName===category)
+    setappointaccordingtocategory(appointaccordingtocategory)
+  } catch (error) {
+    console.log("loading", error);
+  }
+}, [pending.fetchbooking,onwork.fetchbooking,completed.fetchbooking,appoint.fetchbooking]);
+console.log("this is pending",pending);
+console.log("this is pendingaccordoingtocategory",pendingaccordingtocategory);
   return (
     <div>
       {
           IsVisible ? <div className="alert alert-success" role="alert">{message}</div> : ""
         }
        <Navbar setIsUser={setIsUser} Isworker={Isworker} IsUser={IsUser}/>
+       {/* {
+        x===undefined?"":[x].map((item)=>(
+          <p>{item}</p>
+        ))
+       } */}
+      
        
         <div className='container'>
         <ul className="status d-flex justify-content-center nav nav-tabs" id="myTab" role="tablist">
+        <li className="nav-item" role="presentation">
+    <button className="nav-link active" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" style={{color:"#000000"}} aria-selected="true">pending</button>
+  </li>
   <li className="nav-item" role="presentation">
     <button className="nav-link" id="appoint-tab" data-bs-toggle="tab" data-bs-target="#appoint" type="button" role="tab" aria-controls="appoint"style={{color:"#000000"}} aria-selected="false">appoint</button>
   </li>
-  <li className="nav-item" role="presentation">
-    <button className="nav-link active" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" style={{color:"#000000"}} aria-selected="true">pending</button>
-  </li>
+  
   <li className="nav-item" role="presentation">
     <button className="nav-link" id="ongoing-tab" data-bs-toggle="tab" data-bs-target="#ongoing" type="button" role="tab" aria-controls="ongoing"style={{color:"#000000"}} aria-selected="false">ongoing</button>
   </li>
@@ -213,11 +239,12 @@ console.log("this is pendingaccordingtocategory",pendingaccordingtocategory)
           
           <div className='row'>
           <div className=' col-md-2  worker-problem-image-section'>
-              <img  className=" worker-problem-image img-fluid"src={JSON.parse(item.bookedProblem).imagePath}alt='problemimage'/>
+          {/* src={item.bookedProblem.imagePath} */}
+              <img  className=" worker-problem-image img-fluid"src={"pawan"}alt='problemimage'/>
           </div>
           <div className='col-xxl-6 col-xl-6 col-lg-6  col-md-5 worker-problem-description-section'>
               <div className='worker-problem-description'>
-              <h4>Full Name:{JSON.parse(item.bookedProblem).categoryName}</h4>
+              <h4>Full Name:{item.bookedProblem.categoryName}</h4>
               <h4 className='fs-6'>Order Date:{item.bookedDate}Time:{item.bookedDate}</h4>
               </div>
           </div>
@@ -282,11 +309,11 @@ console.log("this is pendingaccordingtocategory",pendingaccordingtocategory)
               <div className='onworkpage '>
               <div className='row'>
           <div className=' col-md-2  worker-problem-image-section'>
-              <img  className=" worker-problem-image img-fluid"src={JSON.parse(item.bookedProblem).imagePath}alt='problemimage'/>
+              <img  className=" worker-problem-image img-fluid"src={"pawan"}alt='problemimage'/>
           </div>
           <div className='col-xxl-6 col-xl-6 col-lg-6  col-md-5 worker-problem-description-section'>
               <div className='worker-problem-description'>
-              <h4>Full Name:{JSON.parse(item.bookedProblem).categoryName}</h4>
+              <h4>Full Name:{item.bookedProblem.categoryName}</h4>
               <h4 className=''>Order Date:{item.bookedDate}Time:{item.bookedDate}</h4>
               </div>
           </div>
@@ -353,11 +380,11 @@ console.log("this is pendingaccordingtocategory",pendingaccordingtocategory)
               <div className='onworkpage '>
               <div className='row'>
           <div className=' col-md-2  worker-problem-image-section'>
-              <img  className=" worker-problem-image img-fluid"src={JSON.parse(item.bookedProblem).imagePath}alt='problemimage'/>
+              <img  className=" worker-problem-image img-fluid"src={"pawan"}alt='problemimage'/>
           </div>
           <div className='col-xxl-6 col-xl-6 col-lg-6  col-md-5 worker-problem-description-section'>
               <div className='worker-problem-description'>
-              <h4>Full Name:{JSON.parse(item.bookedProblem).categoryName}</h4>
+              <h4>Full Name:{item.bookedProblem.categoryName}</h4>
               <h4 className=''>Order Date:{item.bookedDate}Time:{item.bookedDate}</h4>
               </div>
           </div>
@@ -407,66 +434,6 @@ console.log("this is pendingaccordingtocategory",pendingaccordingtocategory)
          </div>
          </div>
          </div>
-                  
-              {/* <div key={index} className='row'>
-               <div className='col-md-12'>
-              <div className='onworkpage '>
-              <div className='row'>
-          <div className=' col-md-2  worker-problem-image-section'>
-              <img  className=" worker-problem-image img-fluid"src={JSON.parse(item.bookedProblem).imagePath}alt='problemimage'/>
-          </div>
-          <div className='col-xxl-6 col-xl-6 col-lg-6  col-md-5 worker-problem-description-section'>
-              <div className='worker-problem-description'>
-              <h4>Full Name:{JSON.parse(item.bookedProblem).categoryName}</h4>
-              <h4>Order Date:{item.bookedDate}Time:{item.bookedDate}</h4>
-              </div>
-          </div>
-
-          <div data-bs-toggle="modal" data-bs-target="#ongoingModal"className='col-md-3  worker-problem-status-section d-flex justify-content-end  align-items-center'>
-              <div className={`worker-problem-status col-6 ${item.status==='ongoing'?'col-md-10 h-50  text-center pending d-flex  justify-content-center  align-items-center rounded':""}`}>
-  {item.status}
-              </div>
-          </div>
-  
-          <div className="modal fade" id="ongoingModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div className="modal-dialog">
-      <div className="modal-content">
-        <div className="modal-header">
-          <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div className="modal-body">
-        <label className='assistance-level'>Update status:</label>
-                        <select className="form-select" onChange={levelofstatus} aria-label="Default select example">
-                          <option selected>Select Assist Level</option>
-                          <option className="op" value="ongoing">ongoing</option>
-                          <option className="op" value="pending">pending</option>
-                          <option className="op" value="appoint">appoint</option>
-                          <option className="op" value="completed">completed</option>
-                        </select>
-  
-        </div>
-        <div className="modal-footer">
-          <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button"onClick={()=>save(item)} className="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-      </div>
-      </div>
-  
-  
-          <div onClick={()=>show(item)} className=" col-xxl-1 col-xl-1 col-lg-1 col-md-2  d-flex align-items-center justify-content-end pr-1 worker-show-status-section">
-      <div className="col-md-12 col-sm-2 col-3 d-flex h-50 align-items-center justify-content-center  worker-show-status  rounded "> 
-          <VisibilityIcon/>
-    </div>
-  </div>
-          </div>
-              
-          
-  
-         </div>
-         </div>
-         </div> */}
       
               </>
      
@@ -484,11 +451,11 @@ console.log("this is pendingaccordingtocategory",pendingaccordingtocategory)
               <div className='onworkpage '>
               <div className='row'>
           <div className=' col-md-2  worker-problem-image-section'>
-              <img  className=" worker-problem-image img-fluid"src={JSON.parse(item.bookedProblem).imagePath}alt='problemimage'/>
+              <img  className=" worker-problem-image img-fluid"src={'pawan'}alt='problemimage'/>
           </div>
           <div className='col-xxl-6 col-xl-6 col-lg-6  col-md-5 worker-problem-description-section'>
               <div className='worker-problem-description'>
-              <h4>Full Name:{JSON.parse(item.bookedProblem).categoryName}</h4>
+              <h4>Full Name:{item.bookedProblem.categoryName}</h4>
               <h4 className='fs-6'>Order Date:{item.bookedDate}Time:{item.bookedDate}</h4>
               </div>
           </div>
