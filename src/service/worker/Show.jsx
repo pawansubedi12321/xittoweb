@@ -17,17 +17,17 @@ const Show = ({Isworker,IsUser,setIsUser}) => {
         <Navbar setIsUser={setIsUser} Isworker={Isworker} IsUser={IsUser}/> 
         <div className='show-details'>
         <p><b>bookedBy:</b></p>
-        <img src={JSON.parse(state.bookedBy).profile_url}/>
-        <p>Name:{JSON.parse(state.bookedBy).name}</p>
-        <p>Phone:{JSON.parse(state.bookedBy).phone}</p>
+        <img src={state.bookedBy.profile_url}/>
+        <p>Name:{state.bookedBy.name}</p>
+        <p>Phone:{state.bookedBy.phone}</p>
 
         <p><b>booked Problem:</b></p>
         <p>imagePath:</p>
-        <img className='col-md-1' src={JSON.parse(state.bookedProblem).imagePath}/>
+        <img className='col-md-1' src={state.bookedProblem.imagePath}/>
         <p>shortDescription:</p>
-        <p>{JSON.parse(state.bookedProblem).shortDescription}</p>
-        <p>Price:{JSON.parse(state.bookedProblem).price}</p>
-        <p>Category name:{JSON.parse(state.bookedProblem).categoryName}</p>
+        <p>{state.bookedProblem.shortDescription}</p>
+        <p>Price:{state.bookedProblem.price}</p>
+        <p>Category name:{state.bookedProblem.categoryName}</p>
 
         <p><b>Details:</b></p>
         <p>created_at:{state.created_at}</p>

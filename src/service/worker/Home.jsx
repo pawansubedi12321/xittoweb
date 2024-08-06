@@ -180,6 +180,7 @@ const [onworkaccordingtocategory,setonworkaccordingtocategory] = useState([]);
 const [completedaccordingtocategory,setcompletedaccordingtocategory] = useState([]);
 const [appointaccordingtocategory,setappointaccordingtocategory] = useState([]);
 
+
 useEffect(() => {
   try {
     const pendingaccordingtocategory = pending.fetchbooking.filter((item) => item.bookedProblem.categoryName===category);
@@ -188,7 +189,7 @@ useEffect(() => {
     setonworkaccordingtocategory(onworkaccordingtocategory)
     const completedaccordingtocategory = completed.fetchbooking.filter((item) => item.bookedProblem.categoryName===category);
     setcompletedaccordingtocategory(completedaccordingtocategory);
-    const appointaccordingtocategory=onwork.fetchbooking.filter((item)=>item.bookedProblem.categoryName===category)
+    const appointaccordingtocategory=appoint.fetchbooking.filter((item)=>item.bookedProblem.categoryName===category)
     setappointaccordingtocategory(appointaccordingtocategory)
   } catch (error) {
     console.log("loading", error);
@@ -196,6 +197,7 @@ useEffect(() => {
 }, [pending.fetchbooking,onwork.fetchbooking,completed.fetchbooking,appoint.fetchbooking]);
 console.log("this is pending",pending);
 console.log("this is pendingaccordoingtocategory",pendingaccordingtocategory);
+console.log("this is appoint",appointaccordingtocategory);
   return (
     <div>
       {
